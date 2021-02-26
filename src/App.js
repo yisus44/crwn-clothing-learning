@@ -4,12 +4,17 @@ import { connect } from "react-redux";
 
 import "./App.css";
 import HomePage from "./pages/homepage/homepage.component.jsx";
+import CheckoutPage from "./pages/checkout/checkout.component.jsx";
 import ShopPage from "./pages/shop/shop.component.jsx";
 import Header from "./components/header/header.component.jsx";
+
 import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component.jsx";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
-import { setCurrentUser } from "./redux/user/user.action";
 
+import { setCurrentUser } from "./redux/user/user.action";
+import { selectCurrentUser } from "./redux/user/user.selector";
+
+import { createStructuredSelector } from "reselect";
 class App extends React.Component {
   unsubscribeFromAuth = null;
 
@@ -39,6 +44,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={HomePage}></Route>
           <Route path="/shop" component={ShopPage}></Route>
+          <Route exact path="/checkout" component={CheckoutPage}></Route>
           <Route
             exact
             path="/login"
@@ -56,10 +62,9 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = ({ user }) => {
-  return { currentUser: user.currentUser };
-};
-
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+});
 const mapDispatchToProps = (dispatch) => {
   return { setCurrentUser: (user) => dispatch(setCurrentUser(user)) };
 };
