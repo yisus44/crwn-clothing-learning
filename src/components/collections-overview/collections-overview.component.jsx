@@ -17,7 +17,7 @@ const CollectionOverview = ({ collections }) => {
         collections.map(({ id, ...otherCollectionsProps }) => {
           return <CollectionPreview key={id} {...otherCollectionsProps} />;
         })
-        //
+        //thinks always in data flow
       }
     </div>
   );
