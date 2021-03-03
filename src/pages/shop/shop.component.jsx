@@ -4,9 +4,6 @@ import { Route } from "react-router-dom";
 
 import CollectionOverview from "../../components/collections-overview/collections-overview.component";
 import CollectionPage from "../../pages/collection/collection.component";
-import { selectCollections } from "../../redux/shop/shop.selectors";
-
-import { createStructuredSelector } from "reselect";
 
 const ShopPage = ({ match }) => {
   return (
