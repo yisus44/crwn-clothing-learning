@@ -53,7 +53,7 @@ export const CustomButtonContainer = styled.div`
   font-size: 15px;
 
   text-transform: uppercase;
-  font-family: "Open Sans Condensed";
+  font-family: "Arial";
   font-weight: bolder;
   border: none;
   cursor: pointer;
