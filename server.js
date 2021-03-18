@@ -5,6 +5,8 @@ const app = express();
 
 if (process.env.NODE_ENV !== "production") require("dotenv").config();
 
+const compression = require("compression");
+
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const port = process.env.PORT || 5000;
@@ -20,6 +22,8 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.join(__dirname, "client/build", "index.html"));
   });
 }
+
+app.use(compression);
 
 app.post("/payment", (req, res) => {
   const body = {
