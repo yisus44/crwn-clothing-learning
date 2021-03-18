@@ -20,6 +20,8 @@ const SignInAndSignUpPage = lazy(() =>
   import("./pages/sign-in-and-sign-up/sign-in-and-sign-up.component.jsx")
 );
 
+import ErrorBoundary from "./components/error-boundary/error-boundary.component";
+
 const App = ({ checkUserSession, currentUser }) => {
   useEffect(() => {
     checkUserSession();
@@ -30,19 +32,21 @@ const App = ({ checkUserSession, currentUser }) => {
       <GlobalStyle />
       <Header />
       <Switch>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Route exact path="/" component={HomePage}></Route>
+        <ErrorBoundary>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Route exact path="/" component={HomePage}></Route>
 
-          <Route path="/shop" component={ShopPage}></Route>
-          <Route exact path="/checkout" component={CheckoutPage}></Route>
-          <Route
-            exact
-            path="/login"
-            render={() =>
-              currentUser ? <Redirect to="/" /> : <SignInAndSignUpPage />
-            }
-          ></Route>
-        </Suspense>
+            <Route path="/shop" component={ShopPage}></Route>
+            <Route exact path="/checkout" component={CheckoutPage}></Route>
+            <Route
+              exact
+              path="/login"
+              render={() =>
+                currentUser ? <Redirect to="/" /> : <SignInAndSignUpPage />
+              }
+            ></Route>
+          </Suspense>
+        </ErrorBoundary>
       </Switch>
     </div>
   );
