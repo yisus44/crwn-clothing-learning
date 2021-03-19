@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const app = express();
+const enforce = require("express-sslify");
 
 if (process.env.NODE_ENV !== "production") require("dotenv").config();
 
@@ -15,14 +16,18 @@ app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.get("./service-worker.js", (req, res) => {
+  res.sendFile(path.resolver(__dirname, "..", "build", "service-worker.js"));
+});
+
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "client-build")));
+  app.use(enforce.HTTPS({ trustProtoHeader: true }));
+  app.use(express.static(path.join(__dirname, "client/build")));
 
   app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "client/build", "index.html"));
   });
 }
-
 app.use(compression);
 
 app.post("/payment", (req, res) => {

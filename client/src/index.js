@@ -12,6 +12,8 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { store, persistor } from "./redux/store/store";
 
+serviceWorkerRegistration.register();
+
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
